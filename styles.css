@@ -1,0 +1,11 @@
+body {
+    background-color: #000;
+}
+#main-wrapper{
+    width: 100%;
+    margin: 5% auto;
+}
+
+h4{
+    color: white;
+}
