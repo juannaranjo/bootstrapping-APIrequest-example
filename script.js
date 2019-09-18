@@ -2,6 +2,7 @@
 var mainWrapper = document.querySelector('#main-wrapper');
 
 
+
 // ejemplo de como conectarnos a una API y traer la información
 fetch('https://randomuser.me/api/?results=50').then((value) =>{
     return value.json();
@@ -19,28 +20,29 @@ fetch('https://randomuser.me/api/?results=50').then((value) =>{
     }
     return usersInfo
 }).then((usersInfo) => {
-    console.log(usersInfo)
+    console.log('info usuarios API', usersInfo)
     // creamos los elementos div img y h4 para cada uno de los usuarios que tenemos en el array userInfo
     for(i = 0; i < usersInfo.length; i++){
-        var containerDiv = document.createElement('div')
-        var userPicture = document.createElement('img')
-        var userName = document.createElement('h4')
-        
-        // a los elementos creados se les adiciona en sus atributos información que recolectamos de la respuesta de la API
-        userPicture.src = usersInfo[i].picture.medium
-        userName.innerHTML = usersInfo[i].name.first + " " + usersInfo[i].name.last
+        var containerAnchor = document.createElement('a');
+        var userPictureElment = document.createElement('img');
+        var userNameElement = document.createElement('h4');
 
-        // aderimos los elementos creados a contener principal que tenemos en el HTML
-        containerDiv.appendChild(userPicture)
-        containerDiv.appendChild(userName)
-        mainWrapper.appendChild(containerDiv)
-       
+        var userPicture = usersInfo[i].picture ;
+        var userName = usersInfo[i].name.first + " " + usersInfo[i].name.last ;
+        var urlplusParams = './userPage.html' + '?' + 'name=' + userName + '&' + 'pic=' + userPicture.large;
+        
+        //a los elementos "a" creados, se les adiciona en su atributo "href" información que necesitaremos para la redirección a la nueva página del usuario
+        containerAnchor.href = urlplusParams;
+        containerAnchor.classList.add('user-container');
+
+        // a los elementos creados se les adiciona en sus atributos información que recolectamos de la respuesta de la API
+        userPictureElment.src = userPicture.medium;
+        userPictureElment.alt = 'Profile picture of ' + userName;
+        userNameElement.innerHTML = userName;
+
+        // aderimos los elementos creados al contener principal que tenemos en el HTML
+        containerAnchor.appendChild(userPictureElment);
+        containerAnchor.appendChild(userNameElement);
+        mainWrapper.appendChild(containerAnchor);
     }
 })
-
-
-
-
-
-
-
